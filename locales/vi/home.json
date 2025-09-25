@@ -1,0 +1,14 @@
+{
+  "home_mainTitle": "Like Kids",
+  "home_subtitle": "Tự Tin - Tỏa Sáng",
+  "app_free-generation_title": "Tạo ảnh tự do",
+  "app_free-generation_description": "Tạo ảnh mới từ văn bản hoặc chỉnh sửa ảnh tải lên bằng prompt của riêng bạn.",
+  "app_image-interpolation_title": "Nội suy hình ảnh",
+  "app_image-interpolation_description": "Phân tích cặp ảnh để tạo prompt, sau đó áp dụng prompt đó cho một ảnh tham chiếu.",
+  "app_dress-the-model_title": "Mặc trang phục cho mẫu",
+  "app_dress-the-model_description": "Thử trang phục mới cho người mẫu từ ảnh của bạn, giữ nguyên khuôn mặt và vóc dáng.",
+  "app_replace-product-in-scene_title": "Thay Sản Phẩm Vào Bối Cảnh",
+  "app_replace-product-in-scene_description": "Tự động tách nền sản phẩm và ghép vào bối cảnh mới một cách thông minh.",
+  "app_pattern-designer_title": "Thiết kế Họa tiết",
+  "app_pattern-designer_description": "Áp dụng một họa tiết từ một ảnh lên quần áo trong một ảnh khác."
+}

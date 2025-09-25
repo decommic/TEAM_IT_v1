@@ -1,0 +1,7 @@
+{
+  "name": "TEAM_IT v1",
+  "description": "còn lỗi thư viện",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
