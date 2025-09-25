@@ -13,8 +13,8 @@ interface ImageThumbnailProps {
     isSelectionMode: boolean;
     isSelected: boolean;
     onSelect: (index: number) => void;
-    onEdit?: (index: number, e: React.MouseEvent) => void;
     onDelete: (index: number, e: React.MouseEvent) => void;
+    onEdit: (index: number, e: React.MouseEvent) => void;
     onQuickView?: (index: number, e: React.MouseEvent) => void;
 }
 
@@ -24,8 +24,8 @@ export const ImageThumbnail: React.FC<ImageThumbnailProps> = ({
     isSelectionMode,
     isSelected,
     onSelect,
-    onEdit,
     onDelete,
+    onEdit,
     onQuickView,
 }) => {
     const isVideo = imageUrl.startsWith('blob:');

@@ -641,7 +641,6 @@ export const LayerComposerModal: React.FC<LayerComposerModalProps> = ({ isOpen, 
         img.src = url; setIsGalleryOpen(false); setIsWebcamOpen(false);
     }, [addImagesAsLayers]);
     
-    // FIX: The unnecessary spread operator `...{}` was causing a TypeScript compilation error. It has been removed.
     const handleAddTextLayer = useCallback(() => {
         if (!canvasInitialized) { setCanvasInitialized(true); }
         beginInteraction();
@@ -846,7 +845,7 @@ export const LayerComposerModal: React.FC<LayerComposerModalProps> = ({ isOpen, 
                 const resultsArrays = await Promise.all(generationPromises);
                 if (signal.aborted) return;
     
-                const finalResults = resultsArrays.flat();
+                const finalResults = resultsArrays.reduce((acc, val) => acc.concat(val), []);
                 if (finalResults.length === 0) throw new Error("AI did not generate any images.");
     
                 const imageLoadPromises = finalResults.map(url => new Promise<HTMLImageElement>((resolve, reject) => {
@@ -909,9 +908,10 @@ export const LayerComposerModal: React.FC<LayerComposerModalProps> = ({ isOpen, 
                 });
     
                 addLog(t('layerComposer_ai_log_generating'), 'spinner');
-                const results = (await Promise.all(generationPromises)).flat();
+                const resultsArrays = await Promise.all(generationPromises);
                 if (signal.aborted) return;
     
+                const results = resultsArrays.reduce<string[]>((acc, val) => acc.concat(val), []);
                 if (results.length === 0) throw new Error("AI did not generate any images.");
     
                 const imageLoadPromises = results.map(url => new Promise<HTMLImageElement>((resolve, reject) => {
@@ -1078,12 +1078,13 @@ export const LayerComposerModal: React.FC<LayerComposerModalProps> = ({ isOpen, 
                 blendMode: 'source-over',
                 isVisible: layerToBake.isVisible,
                 isLocked: false,
-                text: undefined,
-                fontFamily: undefined,
-                fontSize: undefined,
+// FIX: In `handleBakeSelectedLayer`, the `newLayer` object was missing required properties (`fontWeight`, `fontStyle`, `textTransform`) from the `Layer` interface. This type mismatch 'polluted' the `layers` state, causing a downstream error with the spread operator (`...layers`) in `handleAddTextLayer`. Added the missing properties to the baked layer object to ensure type consistency.
                 fontWeight: 'normal',
                 fontStyle: 'normal',
                 textTransform: 'none',
+                text: undefined,
+                fontFamily: undefined,
+                fontSize: undefined,
                 textAlign: undefined,
                 color: undefined,
                 lineHeight: undefined,
@@ -1209,7 +1210,7 @@ export const LayerComposerModal: React.FC<LayerComposerModalProps> = ({ isOpen, 
                 
                 addLog(t('layerComposer_ai_log_generating'), 'spinner');
                 const resultsArrays = await Promise.all(generationPromises);
-                const flatResults = resultsArrays.flat();
+                const flatResults = resultsArrays.reduce((acc, val) => acc.concat(val), []);
 
                 if (flatResults.length > 0) {
                      const imageLoadPromises = flatResults.map(url => new Promise<HTMLImageElement>((resolve, reject) => {

@@ -12,6 +12,7 @@ import { EffectsAdjustments } from './components/EffectsAdjustments';
 import { MagicTools } from './components/MagicTools';
 import { BrushEraserSettings } from './components/BrushEraserSettings';
 import { RangeSlider } from './components/RangeSlider';
+// FIX: The type 'ImageEditorState' was not exported from useImageEditorState. The fix involves exporting the type from the hook file and importing it here.
 import { type ImageEditorState } from './useImageEditorState';
 
 type ImageEditorControlsProps = ImageEditorState;

@@ -82,7 +82,7 @@ const Placeholder = ({ type = 'person' }: { type?: 'person' | 'architecture' | '
 const PolaroidCard: React.FC<PolaroidCardProps> = ({ mediaUrl, caption, status, error, onShake, onDownload, onEdit, onSwapImage, onSelectFromGallery, onCaptureFromWebcam, isMobile, placeholderType = 'person', onClick }) => {
     const { t } = useAppControls();
     const hasMedia = status === 'done' && mediaUrl;
-    const isVideo = hasMedia && mediaUrl!.startsWith('blob:');
+    const isVideo = hasMedia && (mediaUrl!.startsWith('blob:') || mediaUrl!.endsWith('.mp4'));
     const isClickable = !!onClick;
 
     const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -137,18 +137,6 @@ const PolaroidCard: React.FC<PolaroidCardProps> = ({ mediaUrl, caption, status, 
                     "absolute top-2 right-2 z-20 flex flex-col gap-2 transition-opacity duration-300",
                     (hasMedia || onSelectFromGallery || onCaptureFromWebcam) ? (!isMobile ? 'opacity-0 group-hover:opacity-100' : '') : 'opacity-0 pointer-events-none'
                 )}>
-                     {hasMedia && onEdit && (
-                        <button
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                onEdit();
-                            }}
-                            className="p-2 bg-black/50 rounded-full text-white hover:bg-black/75 focus:outline-none focus:ring-2 focus:ring-white"
-                            aria-label={t('common_edit')}
-                        >
-                           <EditorIcon className="h-5 w-5" />
-                        </button>
-                    )}
                      {hasMedia && onSwapImage && (
                         <button
                             onClick={(e) => {
@@ -189,6 +177,18 @@ const PolaroidCard: React.FC<PolaroidCardProps> = ({ mediaUrl, caption, status, 
                                 strokeLinecap="round" 
                                 strokeLinejoin="round"
                             />
+                        </button>
+                    )}
+                    {hasMedia && !isVideo && onEdit && (
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onEdit();
+                            }}
+                            className="p-2 bg-black/50 rounded-full text-white hover:bg-black/75 focus:outline-none focus:ring-2 focus:ring-white"
+                            aria-label={t('common_edit')}
+                        >
+                            <EditorIcon className="h-5 w-5" />
                         </button>
                     )}
                      {hasMedia && onShake && (

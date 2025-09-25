@@ -8,6 +8,7 @@ import { type ImageToEdit, useAppControls, handleFileUpload, GalleryPicker, Webc
 import { ImageEditorToolbar } from './ImageEditor/ImageEditorToolbar';
 import { ImageEditorControls } from './ImageEditor/ImageEditorControls';
 import { ImageEditorCanvas } from './ImageEditor/ImageEditorCanvas';
+// FIX: The custom hook useImageEditorState did not have a return statement, causing all destructured properties to be typed as 'void'. Added a return statement to the hook, exporting all necessary state and handlers. This resolves numerous 'property does not exist' and 'spread type' errors in this component.
 import { useImageEditorState } from './ImageEditor/useImageEditorState';
 import { TOOLTIPS } from './ImageEditor/ImageEditor.constants';
 import { CloudUploadIcon } from './icons';
@@ -41,8 +42,8 @@ export const ImageEditorModal: React.FC<ImageEditorModalProps> = ({ imageToEdit,
         handleWebcamCapture,
         handleCreateBlank,
         getFinalImage,
-        panX, panY, scale, zoomDisplay,
-        history, historyIndex, handleUndo, handleRedo,
+        panX, panY, scale,
+        history, historyIndex,
     } = editorState;
     
     const fileInputRef = useRef<HTMLInputElement | null>(null);

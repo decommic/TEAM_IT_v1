@@ -13,8 +13,7 @@ import { useLightbox } from './uiHooks';
 import { ImageThumbnail } from './ImageThumbnail';
 import { GalleryToolbar } from './GalleryToolbar';
 import { ImageThumbnailActions } from './ImageThumbnailActions';
-// FIX: Import combineImages from the uiUtils aggregator
-import { combineImages, downloadJson } from './uiUtils';
+import { combineImages, downloadJson } from './uiFileUtilities';
 import Lightbox from './Lightbox';
 export * from './SearchableSelect';
 
@@ -507,7 +506,6 @@ export const GalleryPicker: React.FC<GalleryPickerProps> = ({ isOpen, onClose, o
                 layout: direction,
                 gap: 0,
                 backgroundColor: '#FFFFFF',
-                // FIX: Added missing properties to satisfy the 'labels' object type.
                 labels: {
                     enabled: false,
                     fontColor: '#000000',
@@ -556,7 +554,6 @@ export const GalleryPicker: React.FC<GalleryPickerProps> = ({ isOpen, onClose, o
             return;
         }
 
-        // FIX: Add explicit File type to resolve 'type' property error on 'unknown'.
         const imageFiles = Array.from(files).filter((file: File) => file.type.startsWith('image/'));
         if (imageFiles.length === 0) {
             isDroppingRef.current = false;

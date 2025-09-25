@@ -4,7 +4,7 @@
 */
 import React, { useEffect, useCallback, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useAppControls, useImageEditor, ExtraTools } from './uiUtils';
+import { useAppControls, ExtraTools, useImageEditor } from './uiUtils';
 import { cn } from '../lib/utils';
 import { 
     HomeIcon, 
@@ -36,8 +36,7 @@ const AppToolbar: React.FC = () => {
         toggleLayerComposer,
         t,
     } = useAppControls();
-
-    const { openEmptyImageEditor, imageToEdit } = useImageEditor();
+    const { openImageEditor } = useImageEditor();
 
     const [activeTooltip, setActiveTooltip] = useState<{ text: string; rect: DOMRect } | null>(null);
     const tooltipTimeoutRef = useRef<number | null>(null);
@@ -58,13 +57,6 @@ const AppToolbar: React.FC = () => {
         setActiveTooltip(null);
     };
 
-
-    const handleOpenEditor = useCallback(() => {
-        openEmptyImageEditor((newUrl) => {
-            addImagesToGallery([newUrl]);
-        });
-    }, [openEmptyImageEditor, addImagesToGallery]);
-
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             const target = e.target as HTMLElement;
@@ -73,21 +65,19 @@ const AppToolbar: React.FC = () => {
                 return;
             }
 
-            const isEditorOpen = imageToEdit !== null;
-
             const isUndo = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'z' && !e.shiftKey;
             const isRedo = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'z' && e.shiftKey;
             const isSearch = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'f';
             const isGallery = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'g';
             const isHome = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'h';
-            const isInfo = (e.metaKey || e.ctrlKey) && e.key === '/';
             const isEditor = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'e';
+            const isInfo = (e.metaKey || e.ctrlKey) && e.key === '/';
             const isLayerComposer = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'l';
 
-            if (isUndo && !isEditorOpen) {
+            if (isUndo) {
                 e.preventDefault();
                 handleGoBack();
-            } else if (isRedo && !isEditorOpen) {
+            } else if (isRedo) {
                 e.preventDefault();
                 handleGoForward();
             } else if (isSearch) {
@@ -99,12 +89,12 @@ const AppToolbar: React.FC = () => {
             } else if (isHome) {
                 e.preventDefault();
                 handleGoHome();
+            } else if (isEditor) {
+                e.preventDefault();
+                openImageEditor('', (newUrl) => addImagesToGallery([newUrl]));
             } else if (isInfo) {
                 e.preventDefault();
                 handleOpenInfo();
-            } else if (isEditor && !isLayerComposerVisible) {
-                e.preventDefault();
-                handleOpenEditor();
             } else if (isLayerComposer) {
                 e.preventDefault();
                 toggleLayerComposer();
@@ -115,7 +105,7 @@ const AppToolbar: React.FC = () => {
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
-    }, [handleGoBack, handleGoForward, handleOpenSearch, handleOpenGallery, handleOpenInfo, handleGoHome, handleOpenEditor, toggleLayerComposer, imageToEdit, isLayerComposerVisible]);
+    }, [handleGoBack, handleGoForward, handleOpenSearch, handleOpenGallery, openImageEditor, addImagesToGallery, handleOpenInfo, handleGoHome, toggleLayerComposer, isLayerComposerVisible]);
 
     return (
         <>
@@ -182,8 +172,8 @@ const AppToolbar: React.FC = () => {
                     >
                          <GalleryIcon className="h-5 w-5" strokeWidth={2} />
                     </button>
-                    <button
-                        onClick={handleOpenEditor}
+                     <button
+                        onClick={() => openImageEditor('', (newUrl) => addImagesToGallery([newUrl]))}
                         className="btn-search"
                         aria-label={t('appToolbar_editor')}
                         onMouseEnter={(e) => showTooltip(t('appToolbar_editor'), e)}

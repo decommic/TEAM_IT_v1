@@ -1,6 +1,10 @@
 {
-  "home_mainTitle": "Like Kids",
-  "home_subtitle": "Tự Tin - Tỏa Sáng",
+  "home_mainTitle": "aPix",
+  "home_subtitle": "Chọn ứng dụng hoặc tải lên json setting để bắt đầu",
+  "home_selectAppPrompt": "Chọn ứng dụng để bắt đầu",
+  "home_uploadJson": "Tải lên JSON",
+  "home_canvas": "Canvas",
+  "home_imageEditor": "Image Editor",
   "app_free-generation_title": "Tạo ảnh tự do",
   "app_free-generation_description": "Tạo ảnh mới từ văn bản hoặc chỉnh sửa ảnh tải lên bằng prompt của riêng bạn.",
   "app_image-interpolation_title": "Nội suy hình ảnh",

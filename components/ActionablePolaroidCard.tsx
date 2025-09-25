@@ -8,10 +8,10 @@ import {
     handleFileUpload,
     downloadImage,
     RegenerationModal,
-    useImageEditor,
     useAppControls,
     GalleryPicker,
     WebcamCaptureModal,
+    useImageEditor,
 } from './uiUtils';
 
 // NEW: More descriptive card types to centralize logic
@@ -67,8 +67,8 @@ const ActionablePolaroidCard: React.FC<ActionablePolaroidCardProps> = ({
     regenerationDescription,
     regenerationPlaceholder,
 }) => {
-    const { openImageEditor } = useImageEditor();
     const { sessionGalleryImages } = useAppControls();
+    const { openImageEditor } = useImageEditor();
     const [isRegenModalOpen, setIsRegenModalOpen] = useState(false);
     const [isGalleryPickerOpen, setGalleryPickerOpen] = useState(false);
     const [isWebcamModalOpen, setWebcamModalOpen] = useState(false);
@@ -91,13 +91,13 @@ const ActionablePolaroidCard: React.FC<ActionablePolaroidCardProps> = ({
     const handleSwapClick = useCallback(() => {
         fileInputRef.current?.click();
     }, []);
-
+    
     const handleEditClick = useCallback(() => {
         if (mediaUrl && onImageChange) {
             openImageEditor(mediaUrl, onImageChange);
         }
     }, [mediaUrl, onImageChange, openImageEditor]);
-    
+
     const handleRegenerateClick = useCallback(() => {
         setIsRegenModalOpen(true);
     }, []);

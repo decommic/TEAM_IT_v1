@@ -1,6 +1,10 @@
 {
-  "home_mainTitle": "Like Kids",
-  "home_subtitle": "Confidence - Shine",
+  "home_mainTitle": "aPix",
+  "home_subtitle": "Select an application or upload a json setting to start",
+  "home_selectAppPrompt": "Select an application to start",
+  "home_uploadJson": "Upload JSON",
+  "home_canvas": "Canvas",
+  "home_imageEditor": "Image Editor",
   "app_free-generation_title": "Free Generation",
   "app_free-generation_description": "Create new images from text or edit uploaded photos with your own prompts.",
   "app_image-interpolation_title": "Image Interpolation",

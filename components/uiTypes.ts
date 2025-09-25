@@ -62,11 +62,6 @@ export interface Settings {
 export type Theme = 'vietnam' | 'black-night' | 'clear-sky' | 'skyline' | 'emerald-water' | 'life';
 export const THEMES: Theme[] = ['vietnam', 'black-night', 'clear-sky', 'skyline', 'emerald-water', 'life'];
 
-export interface ImageToEdit {
-    url: string | null;
-    onSave: (newUrl: string) => void;
-}
-
 // Model Library Types
 export type ModelCategory = 'default';
 
@@ -75,6 +70,11 @@ export interface Model {
   url: string;
   isFavorite: boolean;
   category: ModelCategory;
+}
+
+export interface ImageToEdit {
+  url: string;
+  onSave: (newUrl: string) => void;
 }
 
 // --- Centralized State Definitions ---
@@ -438,6 +438,7 @@ export interface AppControlContextType {
     language: 'vi' | 'en';
     modelLibrary: Model[];
     dressTheModelHistory: string[];
+    imageToEdit: ImageToEdit | null;
     addModelToLibrary: (imageDataUrl: string) => void;
     updateModelInLibrary: (modelId: string, updates: Partial<Omit<Model, 'id' | 'url'>>) => void;
     deleteModelFromLibrary: (modelId: string) => void;
@@ -469,6 +470,8 @@ export interface AppControlContextType {
     closeLayerComposer: () => void;
     hideLayerComposer: () => void;
     toggleLayerComposer: () => void;
+    openImageEditor: (url: string, onSave: (newUrl: string) => void) => void;
+    closeImageEditor: () => void;
     importSettingsAndNavigate: (settings: any) => void;
     t: (key: string, ...args: any[]) => any;
 }

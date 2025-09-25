@@ -21,7 +21,7 @@ interface SelectedItem {
 }
 
 const ImageLayoutModal: React.FC<ImageLayoutModalProps> = ({ isOpen, onClose }) => {
-    const { sessionGalleryImages, addImagesToGallery, removeImageFromGallery, replaceImageInGallery, t, beforeAfterImages } = useAppControls();
+    const { sessionGalleryImages, addImagesToGallery, removeImageFromGallery, replaceImageInGallery, t } = useAppControls();
     const { openImageEditor } = useImageEditor();
     const { lightboxIndex, openLightbox, closeLightbox, navigateLightbox } = useLightbox();
     
@@ -40,8 +40,6 @@ const ImageLayoutModal: React.FC<ImageLayoutModalProps> = ({ isOpen, onClose }) 
     const [error, setError] = useState<string | null>(null);
     const [isDraggingOver, setIsDraggingOver] = useState(false);
     
-    const isDirectMode = beforeAfterImages[0] && beforeAfterImages[1];
-
 
     const handleToggleSelect = (url: string) => {
         setSelectedItems(prev => 
@@ -108,6 +106,7 @@ const ImageLayoutModal: React.FC<ImageLayoutModalProps> = ({ isOpen, onClose }) 
                 layout: layoutMode,
                 mainTitle: mainTitle.trim(),
                 gap: gap,
+                backgroundColor: '#FFFFFF',
                 // FIX: Added missing properties to satisfy the 'labels' object type.
                 labels: {
                     enabled: hasLabels,
@@ -121,7 +120,7 @@ const ImageLayoutModal: React.FC<ImageLayoutModalProps> = ({ isOpen, onClose }) 
             setMainTitle('');
         } catch (err) {
             console.error("Failed to combine images:", err);
-            const errorMessage = err instanceof Error ? err.message : "Lỗi không xác định.";
+            const errorMessage = err instanceof Error ? err.message : "Unknown error.";
             setError(`Lỗi: Không thể ghép ảnh. ${errorMessage}`);
         } finally {
             setIsLoading(false);

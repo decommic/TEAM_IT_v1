@@ -1,5 +1,4 @@
 
-
 {
   "footer_theme": "Theme",
   "home_start": "Start →",
@@ -43,7 +42,6 @@
   "searchModal_close": "Close search",
   "searchModal_placeholder": "Enter app name or description...",
   "searchModal_noResults": "No applications found.",
-  "galleryModal_cannotEditVideo": "Cannot edit videos.",
   "galleryModal_title": "Image Gallery",
   "galleryModal_empty": "No images have been created in this session.",
   "galleryModal_empty_dragDrop": "You can drag and drop images here or click the Upload button.",
@@ -57,20 +55,6 @@
   "galleryToolbar_upload": "Upload",
   "galleryToolbar_uploadTooltip": "Upload one or more images from your computer",
   "lightbox_download": "Download this image",
-  "imageEditor_mobileWarning": "The image editor is not available on mobile devices.",
-  "imageEditor_startTitle": "Open or Create Image",
-  "imageEditor_startSubtitle": "Start by uploading, selecting from the gallery, or creating a new image.",
-  "imageEditor_uploadButton": "Upload",
-  "imageEditor_galleryButton": "Gallery",
-  "imageEditor_webcamButton": "Webcam",
-  "imageEditor_createButton": "Create New",
-  "imageEditor_dropPrompt": "Drop image here to edit",
-  "imageEditor_aiEdit_title": "AI Edit",
-  "imageEditor_aiEdit_placeholder": "Enter your edit request... e.g., 'add a pair of sunglasses'",
-  "imageEditor_aiEdit_button": "Generate",
-  "imageEditor_aiEdit_loading": "Generating...",
-  "imageEditor_aiEdit_error": "Error with AI Edit: {0}",
-  "imageEditor_aiEdit_selectionNote": "The AI will focus on the selected area.",
   "infoModal_title": "Guide & Shortcuts",
   "infoModal_close": "Close guide",
   "infoModal_generalShortcuts_title": "General Shortcuts",
@@ -79,36 +63,45 @@
     "home": "Go to Home",
     "search": "Search Apps",
     "gallery": "Open Gallery",
-    "editor": "Open Image Editor",
+    "editor": "Open Editor",
     "layerComposer": "Open Canvas",
     "info": "Open this guide"
   },
   "infoModal_appNav_title": "App Navigation",
-  "infoModal_appNav_subtitle": "Only works when the Image Editor is closed.",
   "infoModal_appNav_items": {
     "undo": "Go Back (Undo)",
     "redo": "Go Forward (Redo)"
   },
-  "infoModal_editorUndo_title": "Image Editor: History",
-  "infoModal_editorUndo_subtitle": "Only works when the Image Editor is open.",
-  "infoModal_editorUndo_items": {
-    "undo": "Undo",
-    "redo": "Redo"
+  "infoModal_editorGeneral_title": "Editor: General",
+  "infoModal_editorGeneral_subtitle": "Navigation and viewing in the editor.",
+  "infoModal_editorGeneral_items": {
+    "pan": "Pan Canvas",
+    "zoom": "Zoom In/Out",
+    "resetZoom": "Fit to Screen"
   },
-  "infoModal_editorTools_title": "Image Editor: Tools",
+  "infoModal_editorTools_title": "Editor: Tools",
   "infoModal_editorTools_items": {
     "crop": "Crop Tool",
-    "brush": "Brush Tool",
-    "eraser": "Eraser Tool",
-    "picker": "Color Picker",
-    "brushSize": "Increase/Decrease Brush Size",
-    "tempPicker": "Temporary Color Picker"
+    "perspective": "Perspective Crop",
+    "selection": "Selection (Lasso)",
+    "marquee": "Selection (Rectangular)",
+    "pen": "Pen Tool",
+    "brush": "Brush",
+    "eraser": "Eraser",
+    "picker": "Color Picker"
+  },
+  "infoModal_editorActions_title": "Editor: Actions",
+  "infoModal_editorActions_items": {
+    "deselect": "Deselect All",
+    "invertSelection": "Invert Selection",
+    "fill": "Fill Selection",
+    "delete": "Delete Selection Content",
+    "aspectRatio": "Constrain Aspect Ratio"
   },
   "infoModal_usageTips_title": "Usage Tips",
   "infoModal_usageTips_subtitle": "Power-user tricks to speed up your workflow.",
   "infoModal_usageTips_items": {
     "dragDrop": "Drag & drop image or .json files directly onto the gallery, canvas, or editor.",
-    "tempPicker": "Hold `Alt` in the editor to temporarily switch to the Color Picker tool.",
     "quickDuplicate": "Hold `Alt` and drag a layer in Canvas to quickly duplicate it.",
     "multiSelect": "Hold `Shift` while clicking on layers or objects to select multiple items.",
     "aiContext": "In Canvas, AI generates based on selected layers. If none are selected, it uses the whole canvas.",
@@ -137,7 +130,7 @@
   "appToolbar_search": "Search (Cmd/Ctrl+F)",
   "appToolbar_info": "Guide (Cmd/Ctrl+/)",
   "appToolbar_gallery": "Gallery (Cmd/Ctrl+G)",
-  "appToolbar_editor": "Image Editor (Cmd/Ctrl+E)",
+  "appToolbar_editor": "Editor (Cmd/Ctrl+E)",
   "appToolbar_layerComposer": "Canvas (Cmd/Ctrl+L)",
   "appToolbar_extra": "Extra Tools",
   "login_title": "Please Log In",
@@ -256,5 +249,17 @@
   "layerComposer_ai_log_copied": "Copied!",
   "layerComposer_ai_showLog": "Show Log",
   "layerComposer_ai_hideLog": "Hide Log",
-  "layerComposer_ai_log_noRefine": "Using original prompt (no analysis)."
+  "layerComposer_ai_log_noRefine": "Using original prompt (no analysis).",
+  "imageEditor_startTitle": "Image Editor",
+  "imageEditor_startSubtitle": "Upload, create new, or drag and drop an image to start editing.",
+  "imageEditor_uploadButton": "Upload Image",
+  "imageEditor_galleryButton": "From Gallery",
+  "imageEditor_webcamButton": "Webcam",
+  "imageEditor_createButton": "Create New",
+  "imageEditor_dropPrompt": "Drop an image here to start",
+  "imageEditor_aiEdit_title": "AI Edit",
+  "imageEditor_aiEdit_placeholder": "e.g., add a cowboy hat to the cat...",
+  "imageEditor_aiEdit_button": "Execute",
+  "imageEditor_aiEdit_loading": "Executing...",
+  "imageEditor_aiEdit_selectionNote": "Note: AI Edit will be applied to the entire image, ignoring the current selection."
 }

@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import React from 'react';
+// FIX: The type 'ImageEditorState' was not exported from useImageEditorState. The fix involves exporting the type from the hook file and importing it here.
 import { type ImageEditorState } from '../useImageEditorState';
 import { useAppControls } from '../../uiUtils';
 import { LoadingSpinnerIcon, MagicWandIcon, InvertIcon } from '../../icons';

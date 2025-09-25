@@ -15,17 +15,17 @@ import AppToolbar from './components/AppToolbar';
 import LoginScreen from './components/LoginScreen';
 import UserStatus from './components/UserStatus';
 import LanguageSwitcher from './components/LanguageSwitcher';
-import { ImageEditorModal } from './components/ImageEditorModal';
 import {
     renderSmartlyWrappedTitle,
-    useImageEditor,
     useAppControls,
     ImageLayoutModal,
     BeforeAfterModal,
     LayerComposerModal,
     useAuth,
     AppConfig,
-    PatternDesignerState
+    PatternDesignerState,
+    ImageEditorModal,
+    useImageEditor,
 } from './components/uiUtils';
 import { LoadingSpinnerIcon } from './components/icons';
 
@@ -70,8 +70,9 @@ function App() {
         t,
     } = useAppControls();
     
-    const { imageToEdit, closeImageEditor } = useImageEditor();
     const { loginSettings, isLoggedIn, isLoading, currentUser } = useAuth();
+    const { imageToEdit, closeImageEditor } = useImageEditor();
+
 
     useEffect(() => {
         const isAnyModalOpen = isSearchOpen || 
@@ -79,7 +80,7 @@ function App() {
                                isInfoOpen || 
                                isImageLayoutModalOpen || 
                                isBeforeAfterModalOpen || 
-                               isLayerComposerVisible || 
+                               isLayerComposerVisible ||
                                !!imageToEdit;
 
         if (isAnyModalOpen) {
@@ -300,10 +301,6 @@ function App() {
                 isOpen={isInfoOpen}
                 onClose={handleCloseInfo}
             />
-            <ImageEditorModal 
-                imageToEdit={imageToEdit}
-                onClose={closeImageEditor}
-            />
             <ImageLayoutModal
                 isOpen={isImageLayoutModalOpen}
                 onClose={closeImageLayoutModal}
@@ -319,6 +316,10 @@ function App() {
                     onHide={hideLayerComposer}
                 />
             )}
+            <ImageEditorModal 
+                imageToEdit={imageToEdit}
+                onClose={closeImageEditor}
+            />
             <Footer />
         </main>
     );

@@ -4,11 +4,11 @@
 */
 import React, { useState, useEffect, useCallback, useContext, createContext } from 'react';
 import {
-    type ImageToEdit, type ViewState, type AnyAppState, type Theme,
+    type ViewState, type AnyAppState, type Theme,
     type AppConfig, THEMES, getInitialStateForApp, type Settings,
     type Model,
-    // FIX: Import AppControlContextType to resolve TypeScript errors.
     type AppControlContextType,
+    type ImageToEdit,
 } from './uiTypes';
 import { idbSet, idbGet } from '../lib/idb';
 
@@ -128,61 +128,6 @@ export const useAuth = (): AuthContextType => {
     return context;
 };
 
-// --- Image Editor Hook & Context ---
-interface ImageEditorContextType {
-    imageToEdit: ImageToEdit | null;
-    openImageEditor: (url: string, onSave: (newUrl: string) => void) => void;
-    openEmptyImageEditor: (onSave: (newUrl: string) => void) => void;
-    closeImageEditor: () => void;
-}
-
-const ImageEditorContext = createContext<ImageEditorContextType | undefined>(undefined);
-
-export const ImageEditorProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
-    const [imageToEdit, setImageToEdit] = useState<ImageToEdit | null>(null);
-
-    const openImageEditor = useCallback((url: string, onSave: (newUrl: string) => void) => {
-        if (window.innerWidth < 768) {
-            alert("Chức năng chỉnh sửa ảnh không khả dụng trên thiết bị di động.");
-            return;
-        }
-        if (!url) {
-            console.error("openImageEditor called with no URL.");
-            return;
-        }
-        setImageToEdit({ url, onSave });
-    }, []);
-
-    const openEmptyImageEditor = useCallback((onSave: (newUrl: string) => void) => {
-        if (window.innerWidth < 768) {
-            alert("Chức năng chỉnh sửa ảnh không khả dụng trên thiết bị di động.");
-            return;
-        }
-        setImageToEdit({ url: null, onSave });
-    }, []);
-
-    const closeImageEditor = useCallback(() => {
-        setImageToEdit(null);
-    }, []);
-
-    const value = { imageToEdit, openImageEditor, openEmptyImageEditor, closeImageEditor };
-
-    return (
-        <ImageEditorContext.Provider value={value}>
-            {children}
-        </ImageEditorContext.Provider>
-    );
-};
-
-export const useImageEditor = (): ImageEditorContextType => {
-    const context = useContext(ImageEditorContext);
-    if (context === undefined) {
-        throw new Error('useImageEditor must be used within an ImageEditorProvider');
-    }
-    return context;
-};
-
-
 // --- App Control Context ---
 const AppControlContext = createContext<AppControlContextType | undefined>(undefined);
 
@@ -208,6 +153,7 @@ export const AppControlProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     const [isLayerComposerVisible, setIsLayerComposerVisible] = useState(false);
     const [sessionGalleryImages, setSessionGalleryImages] = useState<string[]>([]);
     const [settings, setSettings] = useState<Settings | null>(null);
+    const [imageToEdit, setImageToEdit] = useState<ImageToEdit | null>(null);
 
     const [language, setLanguage] = useState<'vi' | 'en'>(() => (localStorage.getItem('app-language') as 'vi' | 'en') || 'vi');
     const [translations, setTranslations] = useState<Record<string, any>>({});
@@ -523,6 +469,14 @@ export const AppControlProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
     }, [viewHistory, historyIndex]);
 
+    const openImageEditor = useCallback((url: string, onSave: (newUrl: string) => void) => {
+        setImageToEdit({ url, onSave });
+    }, []);
+
+    const closeImageEditor = useCallback(() => {
+        setImageToEdit(null);
+    }, []);
+
     const value = {
         currentView,
         settings,
@@ -542,6 +496,7 @@ export const AppControlProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         language,
         modelLibrary,
         dressTheModelHistory,
+        imageToEdit,
         addModelToLibrary,
         updateModelInLibrary,
         deleteModelFromLibrary,
@@ -591,6 +546,8 @@ export const AppControlProvider: React.FC<{ children: React.ReactNode }> = ({ ch
                 setTimeout(() => setIsLayerComposerVisible(true), 10);
             }
         },
+        openImageEditor,
+        closeImageEditor,
         importSettingsAndNavigate,
         t,
     };
@@ -609,3 +566,5 @@ export const useAppControls = (): AppControlContextType => {
     }
     return context;
 };
+
+export const useImageEditor = useAppControls;

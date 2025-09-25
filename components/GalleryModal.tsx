@@ -4,7 +4,7 @@
 */
 import React, { useEffect, useState, useRef, ChangeEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { downloadAllImagesAsZip, ImageForZip, useLightbox, useAppControls, useImageEditor, combineImages } from './uiUtils';
+import { downloadAllImagesAsZip, ImageForZip, useLightbox, useAppControls, combineImages, useImageEditor } from './uiUtils';
 import Lightbox from './Lightbox';
 import { ImageThumbnail } from './ImageThumbnail';
 import { GalleryToolbar } from './GalleryToolbar';
@@ -50,22 +50,19 @@ const GalleryModal: React.FC<GalleryModalProps> = ({ isOpen, onClose, images }) 
         downloadAllImagesAsZip(imagesToZip, 'aPix-gallery.zip');
     };
     
+    const handleDeleteImage = (indexToDelete: number, e: React.MouseEvent) => {
+        e.stopPropagation();
+        removeImageFromGallery(indexToDelete);
+    };
+
     const handleEditImage = (indexToEdit: number, e: React.MouseEvent) => {
         e.stopPropagation();
         const urlToEdit = images[indexToEdit];
-        if (!urlToEdit || urlToEdit.startsWith('blob:')) {
-            alert(t('galleryModal_cannotEditVideo'));
-            return;
-        };
+        if (!urlToEdit || urlToEdit.startsWith('blob:')) return;
 
         openImageEditor(urlToEdit, (newUrl) => {
             replaceImageInGallery(indexToEdit, newUrl);
         });
-    };
-
-    const handleDeleteImage = (indexToDelete: number, e: React.MouseEvent) => {
-        e.stopPropagation();
-        removeImageFromGallery(indexToDelete);
     };
 
     const handleQuickView = (indexToView: number, e: React.MouseEvent) => {
@@ -113,7 +110,6 @@ const GalleryModal: React.FC<GalleryModalProps> = ({ isOpen, onClose, images }) 
                 layout: direction,
                 gap: 0,
                 backgroundColor: '#FFFFFF',
-                // FIX: Added missing properties to satisfy the 'labels' object type.
                 labels: { 
                     enabled: false,
                     fontColor: '#000000',
@@ -135,7 +131,6 @@ const GalleryModal: React.FC<GalleryModalProps> = ({ isOpen, onClose, images }) 
 
     const processFiles = async (files: FileList | null) => {
         if (!files || files.length === 0) return;
-        // FIX: Add explicit File type to resolve 'type' property error on 'unknown'.
         const imageFiles = Array.from(files).filter((file: File) => file.type.startsWith('image/'));
         if (imageFiles.length === 0) return;
 
@@ -214,8 +209,8 @@ const GalleryModal: React.FC<GalleryModalProps> = ({ isOpen, onClose, images }) 
                                                 isSelectionMode={isSelectionMode}
                                                 isSelected={selectedIndices.includes(index)}
                                                 onSelect={handleImageSelect}
-                                                onEdit={handleEditImage}
                                                 onDelete={handleDeleteImage}
+                                                onEdit={handleEditImage}
                                                 onQuickView={handleQuickView}
                                             />
                                         ))}
