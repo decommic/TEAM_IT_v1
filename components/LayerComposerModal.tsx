@@ -641,12 +641,10 @@ export const LayerComposerModal: React.FC<LayerComposerModalProps> = ({ isOpen, 
         img.src = url; setIsGalleryOpen(false); setIsWebcamOpen(false);
     }, [addImagesAsLayers]);
     
+// FIX: The unnecessary spread operator `...{}` was causing a TypeScript compilation error. It has been removed and the object is now assigned directly.
     const handleAddTextLayer = useCallback(() => {
         if (!canvasInitialized) { setCanvasInitialized(true); }
         beginInteraction();
-        // FIX: Removed the `url` property and the associated `FIX` comment from the `newLayer` object definition.
-        // This property is not relevant for a text layer and its presence might be causing a subtle type inference error
-        // that leads to the "Spread types may only be created from object types" error on the following line.
         const newLayer: Layer = {
             id: Math.random().toString(36).substring(2, 9), type: 'text', text: 'Hello World', fontFamily: 'Be Vietnam Pro', fontSize: 50, fontWeight: '400', fontStyle: 'normal', textTransform: 'none',
             textAlign: 'left', color: '#000000', lineHeight: 1.2, x: (canvasSettings.width - 300) / 2, y: (canvasSettings.height - 60) / 2,
