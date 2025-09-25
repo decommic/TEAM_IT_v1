@@ -641,7 +641,7 @@ export const LayerComposerModal: React.FC<LayerComposerModalProps> = ({ isOpen, 
         img.src = url; setIsGalleryOpen(false); setIsWebcamOpen(false);
     }, [addImagesAsLayers]);
     
-// FIX: The unnecessary spread operator `...{}` was causing a TypeScript compilation error. It has been removed and the object is now assigned directly.
+    // FIX: The unnecessary spread operator `...{}` was causing a TypeScript compilation error. It has been removed.
     const handleAddTextLayer = useCallback(() => {
         if (!canvasInitialized) { setCanvasInitialized(true); }
         beginInteraction();
